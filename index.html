@@ -248,6 +248,49 @@ html, body { margin: 0; padding: 0; background: #0B0906; }
 .sk-legal-body p { margin: 0 0 10px; }
 .sk-legal-body a { color: var(--gold); text-decoration: none; }
 
+/* ---------- WIDERRUFSFORMULAR ---------- */
+.sk-wf-field { margin-bottom: 14px; }
+.sk-wf-field label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.sk-wf-field input, .sk-wf-field textarea {
+  width: 100%; box-sizing: border-box; background: var(--bg-1); border: 1px solid var(--border);
+  border-radius: 10px; padding: 11px 13px; font-size: 14px; color: var(--ink); font-family: inherit;
+}
+.sk-wf-field input:focus, .sk-wf-field textarea:focus { outline: none; border-color: var(--gold); }
+.sk-wf-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.sk-wf-summary { background: var(--bg-1); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; font-size: 13.5px; line-height: 1.7; margin-bottom: 18px; }
+.sk-wf-summary strong { color: var(--ink); }
+.sk-wf-error { color: #FF6B6B; font-size: 13px; margin-top: 10px; display: none; }
+.sk-wf-success { background: var(--bg-1); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; font-size: 14px; line-height: 1.7; }
+.sk-wf-success strong { color: var(--gold); }
+.sk-wf-step { display: block; }
+.sk-wf-step[hidden] { display: none; }
+
+/* ---------- ANFRAGE-FORMULAR ---------- */
+.sk-anfrage-form { max-width: 640px; }
+.sk-wf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+@media (max-width: 640px) { .sk-wf-grid { grid-template-columns: 1fr; } }
+.sk-wf-success { max-width: 640px; }
+
+.sk-chip-group { margin-bottom: 22px; }
+.sk-chip-group-label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+.sk-chip-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.sk-chip-input { position: absolute; opacity: 0; width: 0; height: 0; }
+.sk-chip {
+  display: inline-flex; align-items: center; padding: 10px 16px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg-1); color: var(--ink-soft);
+  font-size: 13.5px; font-weight: 600; cursor: pointer; user-select: none; transition: all .15s ease;
+}
+.sk-chip:hover { border-color: var(--gold); color: var(--ink); }
+.sk-chip-input:checked + .sk-chip {
+  background: linear-gradient(100deg, var(--gold), var(--orange)); color: #1a1206; border-color: transparent;
+}
+.sk-chip-bundle { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; box-sizing: border-box; padding: 16px 18px; border-radius: 14px; }
+.sk-chip-bundle-title { font-weight: 700; color: var(--ink); font-size: 14.5px; }
+.sk-chip-bundle-sub { font-size: 12.5px; color: var(--ink-soft); }
+.sk-chip-bundle-price { font-weight: 800; font-size: 19px; color: var(--gold); white-space: nowrap; }
+.sk-chip-input:checked + .sk-chip-bundle { border-color: transparent; box-shadow: 0 0 0 2px var(--gold) inset; background: var(--bg-2); }
+.sk-chip-input:checked + .sk-chip-bundle .sk-chip-bundle-price { color: var(--ink); }
+
 /* ---------- FOOTER ---------- */
 .sk-footer { padding-top: 56px; padding-bottom: 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
 .sk-footer .sk-logo { font-size: 16px; }
@@ -385,6 +428,85 @@ html, body { margin: 0; padding: 0; background: #0B0906; }
     </div>
   </section>
 
+  <section class="sk-section sk-wrap" id="kontakt">
+    <div class="sk-section-head">
+      <div class="sk-kicker">Jetzt anfragen</div>
+      <h2>Du willst deine eigene <span class="sk-grad">Sternekarte?</span></h2>
+      <p class="sk-lead">Ausw&auml;hlen, Daten eintragen, abschicken &ndash; wir melden uns mit einem passenden Angebot.</p>
+    </div>
+    <form id="sk-anfrage-form" class="sk-anfrage-form">
+      <input type="hidden" name="access_key" value="da25d44d-6497-4305-9077-19e424e07c7e">
+      <input type="hidden" name="subject" value="Neue Anfrage &uuml;ber sternekarte.de">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="Kartendesign" id="wf-kartendesign-hidden">
+      <input type="hidden" name="Aufsteller" id="wf-aufsteller-hidden">
+      <input type="hidden" name="Angebot" id="wf-angebot-hidden">
+
+      <div class="sk-chip-group">
+        <span class="sk-chip-group-label">Welches Kartendesign interessiert dich? (Mehrfachauswahl m&ouml;glich)</span>
+        <div class="sk-chip-row" id="sk-chip-karten">
+          <input type="checkbox" class="sk-chip-input" id="chip-ostsee" value="Ostsee"><label for="chip-ostsee" class="sk-chip">Ostsee</label>
+          <input type="checkbox" class="sk-chip-input" id="chip-danke" value="Danke."><label for="chip-danke" class="sk-chip">Danke.</label>
+          <input type="checkbox" class="sk-chip-input" id="chip-smiley" value="5-Sterne-L&auml;cheln"><label for="chip-smiley" class="sk-chip">5-Sterne-L&auml;cheln</label>
+          <input type="checkbox" class="sk-chip-input" id="chip-sternenhimmel" value="Sternenhimmel"><label for="chip-sternenhimmel" class="sk-chip">Sternenhimmel</label>
+          <input type="checkbox" class="sk-chip-input" id="chip-ok" value="OK reicht nicht."><label for="chip-ok" class="sk-chip">OK reicht nicht.</label>
+        </div>
+      </div>
+
+      <div class="sk-chip-group">
+        <span class="sk-chip-group-label">Aufsteller?</span>
+        <div class="sk-chip-row" id="sk-chip-aufsteller">
+          <input type="radio" name="aufsteller-radio" class="sk-chip-input" id="chip-schwarz" value="Schwarz"><label for="chip-schwarz" class="sk-chip">Schwarz</label>
+          <input type="radio" name="aufsteller-radio" class="sk-chip-input" id="chip-weiss" value="Wei&szlig;"><label for="chip-weiss" class="sk-chip">Wei&szlig;</label>
+          <input type="radio" name="aufsteller-radio" class="sk-chip-input" id="chip-keinaufsteller" value="Kein Aufsteller"><label for="chip-keinaufsteller" class="sk-chip">Kein Aufsteller</label>
+        </div>
+      </div>
+
+      <div class="sk-chip-group">
+        <input type="checkbox" class="sk-chip-input" id="chip-bundle" value="Set-Angebot: 2 Karten + 1 Aufsteller &ndash; 100&euro;">
+        <label for="chip-bundle" class="sk-chip sk-chip-bundle">
+          <span><span class="sk-chip-bundle-title">Oder gleich das Set-Angebot</span><br><span class="sk-chip-bundle-sub">2 Karten + 1 Aufsteller, Design frei w&auml;hlbar</span></span>
+          <span class="sk-chip-bundle-price">100&euro;</span>
+        </label>
+      </div>
+
+      <div class="sk-wf-grid">
+        <div class="sk-wf-field">
+          <label for="wf-name">Name</label>
+          <input type="text" id="wf-name" name="name" required>
+        </div>
+        <div class="sk-wf-field">
+          <label for="wf-geschaeft">Name des Gesch&auml;fts</label>
+          <input type="text" id="wf-geschaeft" name="Gesch&auml;ft" required>
+        </div>
+        <div class="sk-wf-field">
+          <label for="wf-adresse">Adresse des Gesch&auml;fts</label>
+          <input type="text" id="wf-adresse" name="Adresse" required>
+        </div>
+        <div class="sk-wf-field">
+          <label for="wf-email">E-Mail</label>
+          <input type="email" id="wf-email" name="email" required>
+        </div>
+        <div class="sk-wf-field">
+          <label for="wf-telefon">Telefon (optional)</label>
+          <input type="tel" id="wf-telefon" name="Telefon">
+        </div>
+      </div>
+      <div class="sk-wf-field">
+        <label for="wf-nachricht">Nachricht (optional)</label>
+        <textarea id="wf-nachricht" name="Nachricht" rows="3"></textarea>
+      </div>
+
+      <div class="sk-wf-actions">
+        <button type="submit" class="sk-btn sk-btn-primary" id="sk-anfrage-submit">Anfrage senden</button>
+      </div>
+      <div class="sk-wf-error" id="sk-anfrage-error"></div>
+    </form>
+    <div class="sk-wf-success" id="sk-anfrage-success" hidden>
+      <strong>Danke!</strong> Deine Anfrage ist angekommen &ndash; wir melden uns in K&uuml;rze mit einem passenden Angebot.
+    </div>
+  </section>
+
   <section class="sk-section sk-wrap" id="faq">
     <div class="sk-section-head">
       <div class="sk-kicker">Fragen &amp; Antworten</div>
@@ -421,8 +543,9 @@ html, body { margin: 0; padding: 0; background: #0B0906; }
         <p>Beim Aufruf dieser Website erfasst der Hosting-Anbieter automatisch technische Informationen (u.&nbsp;a. IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, Browsertyp) in sogenannten Server-Logfiles. Diese Verarbeitung erfolgt auf Grundlage unseres berechtigten Interesses an einem sicheren und funktionsf&auml;higen Betrieb der Website (Art. 6 Abs. 1 lit. f DSGVO).</p>
         <h4>Google Fonts</h4>
         <p>Diese Website bindet Schriftarten von Google Fonts ein. Dabei wird beim Aufruf der Seite eine Verbindung zu Servern von Google hergestellt, wobei Ihre IP-Adresse &uuml;bertragen werden kann. Rechtsgrundlage ist unser berechtigtes Interesse an einer einheitlichen, schnellen Darstellung der Website (Art. 6 Abs. 1 lit. f DSGVO). Anbieter: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.</p>
-        <h4>Kontaktaufnahme per E-Mail</h4>
-        <p>Wenn Sie uns per E-Mail kontaktieren, werden die von Ihnen mitgeteilten Daten (u.&nbsp;a. E-Mail-Adresse, Name, Nachrichtentext) zur Bearbeitung Ihrer Anfrage gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO bzw. Art. 6 Abs. 1 lit. f DSGVO bei allgemeinen Anfragen.</p>
+        <h4>Kontaktaufnahme per E-Mail oder Anfrageformular</h4>
+        <p>Wenn Sie uns per E-Mail oder &uuml;ber das Anfrageformular auf dieser Website kontaktieren, werden die von Ihnen mitgeteilten Daten (u.&nbsp;a. Name, Gesch&auml;ftsname, Adresse, E-Mail-Adresse, ggf. Telefonnummer und Nachrichtentext) zur Bearbeitung Ihrer Anfrage und zur Erstellung eines Angebots gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Ma&szlig;nahme) bzw. Art. 6 Abs. 1 lit. f DSGVO bei allgemeinen Anfragen.</p>
+        <p>Das Formular wird technisch &uuml;ber den Dienst Web3Forms abgewickelt, der die eingegebenen Daten entgegennimmt und per E-Mail an uns weiterleitet. Anbieter: Web3Forms. Es werden dabei keine Cookies gesetzt und keine Daten zu Werbezwecken verarbeitet.</p>
         <h4>Cookies und Tracking</h4>
         <p>Diese Website verwendet aktuell keine Cookies und keine Analyse- oder Tracking-Dienste.</p>
         <h4>Ihre Rechte</h4>
@@ -432,11 +555,58 @@ html, body { margin: 0; padding: 0; background: #0B0906; }
     </div>
   </div>
 
-  <footer class="sk-footer sk-wrap" id="kontakt">
+  <footer class="sk-footer sk-wrap">
     <div class="sk-logo">Sternekarte.de<span class="sk-logo-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
     <div class="sk-footer-meta"><a href="mailto:sternekarte@web.de">sternekarte@web.de</a><br><a href="#impressum">Impressum</a> &middot; <a href="#datenschutz">Datenschutz</a></div>
   </footer>
 
 </div>
+<script>
+(function() {
+  var form = document.getElementById('sk-anfrage-form');
+  if (!form) return;
+  var errorBox = document.getElementById('sk-anfrage-error');
+  var successBox = document.getElementById('sk-anfrage-success');
+  var submitBtn = document.getElementById('sk-anfrage-submit');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    errorBox.style.display = 'none';
+
+    var karten = Array.prototype.slice.call(form.querySelectorAll('#sk-chip-karten input:checked'))
+      .map(function(el) { return el.value; }).join(', ');
+    var aufsteller = form.querySelector('#sk-chip-aufsteller input:checked');
+    var bundle = document.getElementById('chip-bundle');
+
+    document.getElementById('wf-kartendesign-hidden').value = karten;
+    document.getElementById('wf-aufsteller-hidden').value = aufsteller ? aufsteller.value : '';
+    document.getElementById('wf-angebot-hidden').value = (bundle && bundle.checked) ? bundle.value : '';
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Wird gesendet...';
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    })
+      .then(function(res) { return res.json(); })
+      .then(function(json) {
+        if (json.success) {
+          form.hidden = true;
+          successBox.hidden = false;
+        } else {
+          throw new Error(json.message || 'Unbekannter Fehler');
+        }
+      })
+      .catch(function() {
+        errorBox.textContent = 'Senden hat leider nicht geklappt. Schreib uns gern direkt an sternekarte@web.de.';
+        errorBox.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Anfrage senden';
+      });
+  });
+})();
+</script>
 </body>
 </html>
