@@ -420,7 +420,13 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 var CONFIG = {
   web3formsKey: 'da25d44d-6497-4305-9077-19e424e07c7e',
   // Stripe-Zahlungslinks je Paket eintragen (https://buy.stripe.com/...). Leer = Zahlungslink kommt per Mail.
-  stripe: { laden:'', team:'', doppel:'', karte:'', aufsteller:'' }
+  stripe: {
+    laden:'https://buy.stripe.com/5kQ8wOenoePTcQpdz77kc00',
+    team:'https://buy.stripe.com/cNi5kC2EG6jn3fP66F7kc01',
+    doppel:'https://buy.stripe.com/9B600i5QS0Z303DfHf7kc02',
+    karte:'https://buy.stripe.com/6oUdR83IKgY1aIh3Yx7kc03',
+    aufsteller:'https://buy.stripe.com/9B64gya782376s1gLj7kc04'
+  }
 };
 var DESIGNS = [
   {id:'ostsee', name:'Ostsee'},
@@ -544,7 +550,7 @@ document.getElementById('buy').onclick=function(){
       if(!j.success) throw new Error(j.message);
       var link=CONFIG.stripe[p.id];
       if(link){
-        var u=link+(link.indexOf('?')>-1?'&':'?')+'client_reference_id='+encodeURIComponent(id)+'&prefilled_email='+encodeURIComponent(fd.get('email'))+(p.qty?'&quantity='+state.qty:'');
+        var u=link+(link.indexOf('?')>-1?'&':'?')+'client_reference_id='+encodeURIComponent(id)+'&prefilled_email='+encodeURIComponent(fd.get('email'));
         location.href=u; return;
       }
       document.getElementById('shop').style.display='none';
