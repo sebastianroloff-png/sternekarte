@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+<meta name="facebook-domain-verification" content="v3jesbzz7yqlhk5c4bhe7mwla5h7e0" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sternekarte – NFC-Bewertungskarten &amp; Thekenaufsteller für Google-Bewertungen</title>
@@ -171,6 +172,18 @@ section.soft{background:var(--soft)}
 .faq summary:after{content:"+";font-weight:300;font-size:26px;line-height:1;color:var(--ink2);transition:transform .2s}
 .faq details[open] summary:after{transform:rotate(45deg)}
 .faq p{color:var(--ink2);margin:12px 0 0}
+
+/* consent + paid */
+.consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:100;max-width:620px;margin:0 auto;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:18px;box-shadow:0 20px 50px -15px rgba(0,0,0,.25);padding:18px 20px;display:flex;gap:18px;align-items:center;font-size:14px;color:var(--ink2)}
+.consent[hidden]{display:none}
+.consent p{margin:0;flex:1}
+.consent-btns{display:flex;gap:6px;flex-shrink:0}
+@media(max-width:560px){.consent{flex-direction:column;align-items:stretch}.consent-btns{justify-content:flex-end}}
+.paid{position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;padding:20px}
+.paid[hidden]{display:none}
+.paid-box{background:#fff;border-radius:24px;max-width:460px;padding:36px 30px;text-align:center}
+.paid-box h3{font-size:26px;letter-spacing:-.02em;margin:10px 0 8px}
+.paid-box p{color:var(--ink2);margin:0 0 22px}
 
 /* legal + footer */
 .legalx{max-width:780px;margin:0 auto;padding:40px 22px 10px;font-size:14px;color:var(--ink2)}
@@ -400,8 +413,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
     <p>Die Website wird bei Cloudflare gehostet. Beim Aufruf werden technisch notwendige Daten (u. a. IP-Adresse, Zeitpunkt, aufgerufene Seite, Browsertyp) verarbeitet. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.</p>
     <h5>Bestellungen</h5>
     <p>Die Angaben aus dem Bestellformular (Firma, Ansprechpartner, Adresse, E-Mail, Telefon, Website, Bestellung) verwenden wir zur Abwicklung deiner Bestellung (Art. 6 Abs. 1 lit. b DSGVO). Das Formular wird über den Dienst Web3Forms per E-Mail an uns übermittelt. Die Zahlung wickelt Stripe Payments Europe Ltd., Dublin, Irland, ab; dabei gelten die Datenschutzhinweise von Stripe.</p>
-    <h5>Cookies und Tracking</h5>
-    <p>Diese Website setzt derzeit keine Cookies und nutzt keine Analyse- oder Tracking-Dienste. Schriften werden nicht von externen Servern geladen.</p>
+    <h5>Cookies, Meta Pixel und Google Ads</h5>
+    <p>Nur wenn du im Cookie-Hinweis zustimmst, setzen wir den Meta Pixel der Meta Platforms Ireland Ltd., Dublin, Irland, ein. Er misst, ob Besucher aus unseren Anzeigen auf Facebook und Instagram bestellen, und setzt dafür Cookies. Ebenfalls nur mit Zustimmung nutzen wir das Conversion-Tracking von Google Ads (Google Ireland Ltd., Gordon House, Barrow Street, Dublin 4, Irland). Es misst, ob Besucher aus unseren Google-Anzeigen bestellen. Dabei können Daten an Meta bzw. Google, auch in die USA, übertragen werden (Grundlage: EU-US Data Privacy Framework). Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 TDDDG). Du kannst sie jederzeit über „Cookie-Einstellungen“ in der Fußzeile widerrufen. Ohne Zustimmung werden keine Cookies gesetzt. Schriften werden nicht von externen Servern geladen.</p>
     <h5>Deine Rechte</h5>
     <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch sowie ein Beschwerderecht bei einer Datenschutzaufsichtsbehörde.</p>
     <p>Stand: November 2026</p>
@@ -411,13 +424,25 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 <footer>
   <div class="wrap">
     <span>© 2026 Sternekarte · Güstrow</span>
-    <span><a href="#impressum">Impressum</a> · <a href="#agb">Verkaufsbedingungen</a> · <a href="#datenschutz">Datenschutz</a> · <a href="mailto:sternekarte@web.de">sternekarte@web.de</a></span>
+    <span><a href="#impressum">Impressum</a> · <a href="#agb">Verkaufsbedingungen</a> · <a href="#datenschutz">Datenschutz</a> · <a href="mailto:sternekarte@web.de">sternekarte@web.de</a> · <a href="#" id="cookie-settings">Cookie-Einstellungen</a></span>
   </div>
 </footer>
+
+<div id="consent" class="consent" hidden>
+  <p>Wir möchten mit dem Meta Pixel und Google Ads messen, ob unsere Anzeigen funktionieren. Dafür werden Cookies gesetzt. <a href="#datenschutz">Mehr erfahren</a></p>
+  <div class="consent-btns"><button class="btn ghost" id="consent-no">Ablehnen</button><button class="btn sm" id="consent-yes">Akzeptieren</button></div>
+</div>
+
+<div id="paid" class="paid" hidden>
+  <div class="paid-box"><div class="stars" style="font-size:28px">★★★★★</div><h3>Zahlung erhalten. Danke!</h3><p>Wir programmieren jetzt deine Karten auf dein Google-Profil und verschicken sie innerhalb von 3 Werktagen. Eine Bestätigung kommt per E-Mail.</p><button class="btn" id="paid-ok">Alles klar</button></div>
+</div>
 
 <script>
 /* ======= EINSTELLUNGEN ======= */
 var CONFIG = {
+  metaPixelId: '1505475784785022',
+  googleAdsId: 'AW-18593096540',
+  googleKaufLabel: 't7rzCMeSur4dENzG8KFF',
   web3formsKey: 'da25d44d-6497-4305-9077-19e424e07c7e',
   // Stripe-Zahlungslinks je Paket eintragen (https://buy.stripe.com/...). Leer = Zahlungslink kommt per Mail.
   stripe: {
@@ -453,7 +478,7 @@ function renderPkgs(){
     PKGS.filter(function(p){return p.group===g;}).forEach(function(p){
       var b=document.createElement('button'); b.type='button'; b.className='pkg'+(state.pkg===p.id?' on':'');
       b.innerHTML=(p.badge?'<span class="badge">'+p.badge+'</span>':'')+'<div class="t">'+p.t+'</div><div class="d">'+p.d+'</div><div class="p">'+eur(p.price)+(p.value?'<s>'+eur(p.value)+'</s>':'')+'</div>';
-      b.onclick=function(){ state.pkg=p.id; state.qty=1; resetSlots(); renderAll(); };
+      b.onclick=function(){ state.pkg=p.id; state.qty=1; resetSlots(); renderAll(); track('AddToCart',{content_name:p.t,value:p.price,currency:'EUR'}); };
       box.appendChild(b);
     });
   });
@@ -551,7 +576,8 @@ document.getElementById('buy').onclick=function(){
       var link=CONFIG.stripe[p.id];
       if(link){
         var u=link+(link.indexOf('?')>-1?'&':'?')+'client_reference_id='+encodeURIComponent(id)+'&prefilled_email='+encodeURIComponent(fd.get('email'));
-        location.href=u; return;
+        track('InitiateCheckout',{content_name:p.t,value:total(),currency:'EUR'});
+        setTimeout(function(){ location.href=u; },400); return;
       }
       document.getElementById('shop').style.display='none';
       document.getElementById('done').style.display='block';
@@ -578,6 +604,47 @@ document.getElementById('buy').onclick=function(){
   window.addEventListener('hashchange',openHash); openHash();
   document.querySelectorAll('a[href="#impressum"],a[href="#agb"],a[href="#datenschutz"]').forEach(function(a){ a.addEventListener('click',function(){ var el=document.getElementById(a.getAttribute('href').slice(1)); if(el) el.open=true; }); });
 })();
+
+/* Meta Pixel nur mit Einwilligung */
+var PIXEL_ON=false;
+function track(ev,data){ try{ if(PIXEL_ON && window.fbq) fbq('track',ev,data||{}); }catch(e){} }
+function loadPixel(){
+  if(PIXEL_ON || !CONFIG.metaPixelId) return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init',CONFIG.metaPixelId); PIXEL_ON=true; fbq('track','PageView');
+  if(CONFIG.googleAdsId){
+    var g=document.createElement('script'); g.async=true; g.src='https://www.googletagmanager.com/gtag/js?id='+CONFIG.googleAdsId; document.head.appendChild(g);
+    window.dataLayer=window.dataLayer||[]; window.gtag=function(){dataLayer.push(arguments);};
+    gtag('js',new Date()); gtag('config',CONFIG.googleAdsId);
+  }
+}
+(function(){
+  var c=null; try{ c=localStorage.getItem('sk_consent'); }catch(e){}
+  var box=document.getElementById('consent');
+  if(c==='yes') loadPixel(); else if(c!=='no' && CONFIG.metaPixelId) box.hidden=false;
+  function set(v){ try{ localStorage.setItem('sk_consent',v); }catch(e){} box.hidden=true; if(v==='yes') loadPixel(); else if(PIXEL_ON) location.reload(); }
+  document.getElementById('consent-yes').onclick=function(){ set('yes'); flushPaid(); };
+  document.getElementById('consent-no').onclick=function(){ set('no'); };
+  document.getElementById('cookie-settings').onclick=function(e){ e.preventDefault(); box.hidden=false; };
+})();
+
+/* Rückkehr von Stripe: ?bezahlt=paket&wert=100 */
+var PAID=null;
+(function(){
+  var q=new URLSearchParams(location.search), b=q.get('bezahlt');
+  if(!b) return;
+  PAID={content_name:b,value:parseFloat(q.get('wert'))||0,currency:'EUR'};
+  document.getElementById('paid').hidden=false;
+  document.getElementById('paid-ok').onclick=function(){ document.getElementById('paid').hidden=true; };
+  flushPaid();
+  history.replaceState(null,'',location.pathname);
+})();
+function flushPaid(){
+  if(!(PAID && PIXEL_ON)) return;
+  track('Purchase',PAID);
+  try{ if(window.gtag && CONFIG.googleAdsId) gtag('event','conversion',{send_to:CONFIG.googleAdsId+'/'+CONFIG.googleKaufLabel,value:PAID.value,currency:'EUR'}); }catch(e){}
+  PAID=null;
+}
 
 /* sanftes Einblenden */
 (function(){
